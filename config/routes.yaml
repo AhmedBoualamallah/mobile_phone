@@ -1,0 +1,6 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+mentions_legales:
+  path: /mentions-legales
+  controller: App\Controller\LegalController::mentionsLegales
