@@ -4,16 +4,19 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 
 class RegisterType extends AbstractType
 {
@@ -61,11 +64,30 @@ class RegisterType extends AbstractType
                     new NotBlank([
                         'message' => 'Veuillez renseigner un mot de passe',
                     ]),
+                    
                     new Length([
-                        'min' => 4,
-                        'minMessage' => 'Votre mot de passe doit contenir minimum 8 charactères',
+                        'min' => 12,
+                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
                         'max' => 4096,
                     ]),
+                    new Regex([
+                        'pattern' => '/[A-Z]/',
+                        'message' => 'Le mot de passe doit contenir au moins une lettre majuscule.',
+                    ]),
+                    new Regex([
+                        'pattern' => '/[a-z]/',
+                        'message' => 'Le mot de passe doit contenir au moins une lettre minuscule.',
+                    ]),
+                    new Regex([
+                        'pattern' => '/[0-9]/',
+                        'message' => 'Le mot de passe doit contenir au moins un chiffre.',
+                    ]),
+                    new Regex([
+                        'pattern' => '/[\W_]/',
+                        'message' => 'Le mot de passe doit contenir au moins un caractère spécial.',
+                    ]),
+
+
                 ],
             ])
             ->add('submit', SubmitType::class, [
@@ -73,7 +95,10 @@ class RegisterType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-outline-success'
                 ]
-            ])
+            ])->add('captcha', Recaptcha3Type::class, [
+                'constraints' => new Recaptcha3(),
+                'action_name' => 'homepage',
+            ]);
         ;
     }
 
