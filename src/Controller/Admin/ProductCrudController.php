@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use App\Entity\Product;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -30,22 +31,37 @@ class ProductCrudController extends AbstractCrudController
 
   
     public function configureFields(string $pageName): iterable
-    {
-        return [
-            TextField::new('name','Nom'),
-            SlugField::new('slug')->setTargetFieldName('name'),
-            ImageField::new('image')
-                ->setBasePath('uploads/')
-                ->setUploadDir('public/uploads/')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
-                ->setRequired(false),
-            TextField::new('subtitle', 'Sous-titre'),
-            TextareaField::new('description')->hideOnIndex(),
-            MoneyField::new('price', 'Prix')->setCurrency('EUR'),
-            AssociationField::new('category', 'Catégorie'),
-            BooleanField::new('isInHome', 'Top produit')
-        ];
-    }
+{
+    return [
+        TextField::new('name', 'Nom'),
+        SlugField::new('slug')->setTargetFieldName('name'),
+
+        ImageField::new('image')
+            ->setBasePath('uploads/')
+            ->setUploadDir('public/uploads/')
+            ->setUploadedFileNamePattern('[randomhash].[extension]')
+            ->setRequired(false),
+
+        TextField::new('subtitle', 'Sous-titre'),
+        TextareaField::new('description')->hideOnIndex(),
+
+        MoneyField::new('price', 'Prix')->setCurrency('EUR'),
+
+        TextField::new('brand', 'Marque'),
+
+        IntegerField::new('ram', 'RAM (Go)'),
+        IntegerField::new('storage', 'Stockage (Go)'),
+        IntegerField::new('battery', 'Batterie (mAh)'),
+        IntegerField::new('camera', 'Appareil photo (MP)'),
+        IntegerField::new('year', 'Année'),
+
+        TextField::new('condition', 'État'),
+
+        AssociationField::new('category', 'Catégorie'),
+
+        BooleanField::new('isInHome', 'Top produit'),
+    ];
+}
     
     public function configureCrud(Crud $crud): Crud
     {

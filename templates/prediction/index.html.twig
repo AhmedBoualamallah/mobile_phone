@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prédiction du prix{% endblock %}
+
+{% block body %}
+    <div style="max-width: 800px; margin: 50px auto; text-align: center;">
+        <h1>🤖 Prédiction du prix du smartphone</h1>
+
+        <p>Prix prédit par notre modèle d'intelligence artificielle :</p>
+
+        <h2>{{ predicted_price|number_format(2, ',', ' ') }} INR</h2>
+
+        <p>
+            Le prix est estimé automatiquement par le modèle IA.
+        </p>
+    </div>
+{% endblock %}

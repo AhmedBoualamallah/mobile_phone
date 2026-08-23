@@ -31,6 +31,21 @@ class Product
     #[ORM\Column(type: 'float')]
     private $price;
 
+    #[ORM\Column(type: 'string', length: 100)]
+    private $brand;
+
+    #[ORM\Column(type: 'integer')]
+    private $ram;
+
+    #[ORM\Column(type: 'integer')]
+    private $storage;
+
+    #[ORM\Column(type: 'integer')]
+    private $year;
+
+    #[ORM\Column(type: 'string', length: 50)]
+    private $condition;
+
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private $category;
@@ -115,6 +130,95 @@ class Product
         return $this;
     }
 
+    public function getBrand(): ?string
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(string $brand): self
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
+    public function getRam(): ?int
+    {
+        return $this->ram;
+    }
+
+    public function setRam(int $ram): self
+    {
+        $this->ram = $ram;
+
+        return $this;
+    }
+
+    public function getStorage(): ?int
+    {
+        return $this->storage;
+    }
+
+    public function setStorage(int $storage): self
+    {
+        $this->storage = $storage;
+
+        return $this;
+    }
+    public function getBattery(): ?int
+{
+    return $this->battery;
+}
+
+public function setBattery(int $battery): self
+{
+    $this->battery = $battery;
+
+    return $this;
+}
+
+public function getCamera(): ?int
+{
+    return $this->camera;
+}
+
+public function setCamera(int $camera): self
+{
+    $this->camera = $camera;
+
+    return $this;
+}
+
+    #[ORM\Column(type: 'integer')]
+private $battery;
+
+#[ORM\Column(type: 'integer')]
+private $camera;
+
+    public function getYear(): ?int
+    {
+        return $this->year;
+    }
+
+    public function setYear(int $year): self
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    public function getCondition(): ?string
+    {
+        return $this->condition;
+    }
+
+    public function setCondition(string $condition): self
+    {
+        $this->condition = $condition;
+
+        return $this;
+    }
+
     public function getCategory(): ?Category
     {
         return $this->category;
@@ -138,6 +242,4 @@ class Product
 
         return $this;
     }
-
-
 }
